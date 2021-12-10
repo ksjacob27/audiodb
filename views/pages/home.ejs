@@ -1,0 +1,49 @@
+<%- include('../partials/header'); -%>
+<body>
+  <main>
+    <div class="" style="background-color: #252525;">
+      <div class="container-fluid" style="padding: 2%; ">
+        <form class="" action="/get_feed" method="post">
+          <%- include('../partials/menu'); -%>
+          <div class="row">
+            <div class="col-3">
+
+            </div>
+            <div class="col-5">
+              <input class="form-control" type="text" name="artistSearch" placeholder="Enter Artist Name">
+            </div>
+            <div class="col-1">
+              <input class="btn btn-light" type="submit" name="Submit" value = "Submit"/>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="container-lg" style="margin-top: 2%;">
+      <% if (error) { %>
+        <div class="alert alert-danger"><%- message %></div>
+      <% } %>
+      
+    </div>
+    <% if(typeof items.data != 'undefined')
+      { %>
+        <div class="container-fluid">
+          <div class="card-body">
+            <img class="card-img-top" src=<%- artistBanner %> alt="Banner Image">
+          
+            <h1> <%- artistName %> </h1>
+            <a type = "button" href = "https://<%- artistWebsite %>" class="btn btn-primary">Artist's Website</a> <a type = "button" href = "" class="btn btn-primary">Add Review</a> 
+
+            <h3>Year Formed:</h3><p></p> <p><%-artistYear%></p>
+            <p></p>
+            <h3>Artist Genre:</h3><p></p> <p><%-artistGenre%></p>
+            <p></p>
+            <h3>Artist Bio:</h3><p></p> <p><%-artistBio%></p>
+            <!--<a href="#" class="btn btn-primary">Go somewhere</a> -->
+          </div>
+        </div>
+        <%
+      } %>
+ 
+  </main>
+<%- include('../partials/footer'); -%>

@@ -1,0 +1,45 @@
+# More resources related to this file:
+# [1] Overview   | https://docs.docker.com/compose/
+# [2] PostgreSQL | https://github.com/docker-library/docs/tree/master/postgres
+# -------------
+#  More resources for your projects:
+# [4] Samples    | https://github.com/docker/awesome-compose
+# [5] Env Vars   | https://docs.docker.com/compose/environment-variables/
+# [6] Secrets    | https://docs.docker.com/engine/swarm/secrets/#use-secrets-in-compose
+# ------------------------------------------------------------------------------
+version: "3.9"
+# This section defines all of our components as "services", each which is
+# itself a docker image [1].
+services:
+  # This section defines our PostgreSQL database [2].
+  # Note that the name db also becomes the hostname of the postgres container
+  db:
+    image: "postgres"
+    # Environment variables to setup postgres ar stored in a .env file. For 
+    # this lab it is checked into your repo, please note that this is not 
+    # secure, and in production (or your project), you should not commit this 
+    # file to GitHub.
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: artist_db
+    volumes:
+      - kevinDB:/var/lib/postgresql/data 
+      - ./init_db:/docker-entrypoint-initdb.d 
+    ports:
+      - '5432:5432'
+
+  web:
+    image: kevinjacob/individualprojects_setc-kevinjacob
+    depends_on:
+      - db
+    ports:
+      - '3000:3000'
+
+
+# This defines our volume(s), which will persist throughout startups.
+# If you want to get rid of a hanging volume, e.g. to test your database init,
+# run docker-compose rm -v. Note that this will remove ALL of your data, so
+# be extra sure you've made a stable backup somewhere.
+volumes:
+  kevinDB: {}
