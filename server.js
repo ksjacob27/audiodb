@@ -9,24 +9,16 @@ const axios = require('axios');
 const qs = require('query-string');
 module.exports = app;
 
-const dev_dbConfig = {
-	host: 'db',
-	port: 5432,
-	database: process.env.POSTGRES_DB,
-	user: process.env.POSTGRES_USER,
-	password: process.env.POSTGRES_PASSWORD
+const db_config = {
+  host: 'db',
+  port: 5432,
+  database: 'artist_db',
+  user: 'postgres',
+  password: 'pwd'
 };
 
+var db = pgp(db_config);
 
-const isProduction = process.env.NODE_ENV === 'production';
-const dbConfig = isProduction ? process.env.DATABASE_URL : dev_dbConfig;
-
-// fixes: https://github.com/vitaly-t/pg-promise/issues/711
-if (isProduction) {
-	pgp.pg.defaults.ssl = {rejectUnauthorized: false};
-}
-
-let db = pgp(dbConfig);
 
 // Set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -98,7 +90,6 @@ app.post('/get_feed', function(req, res) {
 
 
   }
-
   else {
     res.render('pages/home',{
       my_title: "Artist Info",
@@ -135,8 +126,5 @@ app.get('/searchReviews', function(req,res) {
       ]);      
     })
 });
-//app.listen(3000);
-const server = app.listen(process.env.PORT || 3000, () => {
-  console.log(`Express running → PORT ${server.address().port}`);
-});
-//console.log('3000 is the magic port');
+app.listen(3000);
+console.log('3000 is the magic port');
