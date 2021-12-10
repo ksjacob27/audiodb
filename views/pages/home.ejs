@@ -32,7 +32,10 @@
             <img class="card-img-top" src=<%- artistBanner %> alt="Banner Image">
           
             <h1> <%- artistName %> </h1>
-            <a type = "button" href = "https://<%- artistWebsite %>" class="btn btn-primary">Artist's Website</a> <a type = "button" href = "" class="btn btn-primary">Add Review</a> 
+            <a type = "button" href = "https://<%- artistWebsite %>" class="btn btn-primary">Artist's Website</a> 
+            <%- include('../pages/reviews'); -%>
+
+            
 
             <h3>Year Formed:</h3><p></p> <p><%-artistYear%></p>
             <p></p>
